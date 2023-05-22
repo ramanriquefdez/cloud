@@ -1,12 +1,17 @@
 # Imagen de Golang como base
-   FROM golang:latest
+   FROM golang:1.19-alpine
     # Copia los archivos de tu proyecto al contenedor
-   COPY . /go/src/app
-   WORKDIR /go/src/app
-    # Descarga e instala las dependencias necesarias
-   RUN go get -d -v ./...
-   RUN go install -v ./...
-    # Expone el puerto 8080
+   # Establecer el directorio de trabajo en el directorio del proyecto
+   WORKDIR /go/src/cloud
+
+   # Copiar el contenido del directorio del proyecto al contenedor
+   COPY . .
+
+   # Compilar la aplicación
+   RUN go build -o cloud_poc .
+
+   # Exponer el puerto 8080
    EXPOSE 8080
-    # Arranca el servidor
-   CMD ["cloud"]
+
+   # Ejecutar la aplicación
+   CMD ["./cloud_poc"]
