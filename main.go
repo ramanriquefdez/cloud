@@ -11,9 +11,14 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hola, mundo!")
 }
 
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+}
+
 func main() {
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/fibonacci", fibHandler)
+	http.HandleFunc("/health", healthHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
